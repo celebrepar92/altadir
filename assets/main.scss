@@ -64,11 +64,18 @@ body {
 @media screen and (max-width: 768px) {
   .layout-with-sidebar {
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
   }
   
   .sidebar {
-    width: 100%; /* Toma todo el ancho en móviles */
+    width: 100%;
+    order: 1; /* Le dice a la barra que aparezca primero */
+    border-bottom: 2px solid #eee; /* Agregamos una línea para separarla de los posts */
+    padding-bottom: 1rem;
+  }
+
+  .main-content {
+    order: 2; /* Le dice a los posts que aparezcan debajo */
   }
 }
 
