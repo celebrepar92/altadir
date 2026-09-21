@@ -7,11 +7,12 @@ layout: default
     <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
     <p class="post-meta">
       <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
-        <!-- Formato de fecha en números -->
         {{ page.date | date: "%d/%m/%Y" }}
       </time>
+      
+      <!-- Nueva sección del autor -->
       {%- if page.author -%}
-        • <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+        • Por <span itemprop="author" itemscope itemtype="http://schema.org/Person">
             <span class="p-author h-card" itemprop="name">{{ page.author }}</span>
           </span>
       {%- endif -%}
