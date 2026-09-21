@@ -64,6 +64,23 @@ layout: default
   </div>
 
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const primerParrafo = document.querySelector('.post-content p');
+      
+      if (primerParrafo) {
+        const palabras = primerParrafo.innerHTML.split(' ');
+        
+        if (palabras.length > 4) {
+          const inicio = palabras.slice(0, 4).join(' ');
+          const resto = palabras.slice(4).join(' ');
+          
+          primerParrafo.innerHTML = `<span style="font-variant: small-caps; font-weight: bold;">${inicio}</span> ${resto}`;
+        }
+      }
+    });
+  </script>
 </article>
 
 <style>
