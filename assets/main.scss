@@ -72,3 +72,20 @@ body {
     width: 100%; /* Toma todo el ancho en móviles */
   }
 }
+
+.post-content p, 
+.post-content li {
+  font-size: 0.95rem; /* Ajustá este valor a tu gusto. El normal es 1rem (aprox 16px) */
+  line-height: 1.7; /* Da un buen espacio entre líneas para que Literata respire */
+}
+
+/* Traducir el enlace de Subscribe vía RSS en el footer */
+.social-media-list a[href*="feed.xml"] span {
+  display: none;
+}
+
+.social-media-list a[href*="feed.xml"]::after {
+  content: "Suscribirse vía RSS";
+  font-size: 1rem;
+  margin-left: 5px;
+}
