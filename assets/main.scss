@@ -74,22 +74,22 @@ body {
   .layout-with-sidebar {
     flex-direction: column;
     gap: 1.5rem;
-    margin-top: 0 !important; /* Quita la separación superior con el header */
+    margin-top: 0 !important;
   }
-  
+
   .sidebar {
-    order: 1; 
-    width: 100vw; /* Toma el 100% del ancho de la pantalla */
-    margin-left: calc(50% - 50vw); /* Rompe los límites del contenedor central */
+    order: -1; /* Garantiza que salte al tope */
+    width: 100vw; 
+    margin-left: calc(50% - 50vw); 
     margin-right: calc(50% - 50vw);
-    border-radius: 0; /* Aseguramos bordes rectos */
-    padding: 1rem 15px; /* Mantiene el texto alineado con el resto del contenido */
+    border-radius: 0; 
+    padding: 1rem 15px; 
     text-align: left;
   }
 
   .main-content {
-    order: 2;
-    padding: 0; /* Reseteamos paddings anteriores */
+    order: 1;
+    padding: 0; 
   }
 }
 
