@@ -18,16 +18,29 @@ layout: default
           <!-- Muestra la fecha en formato DD/MM/AAAA -->
           {{ post.date | date: "%d/%m/%Y" }}
           
-          <!-- Muestra el autor si existe -->
-          {%- if post.author -%}
-            • Por {{ post.author }}
+          {%- if post.external_url -%}
+            <span style="background-color: #f0f0f0; border: 1px solid #ddd; color: #666; padding: 2px 6px; border-radius: 4px; font-size: 0.85em; margin-left: 10px; display: inline-flex; align-items: center;">
+              <svg style="width: 12px; height: 12px; margin-right: 4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 2.1l4 4-4 4"/>
+                <path d="M3 12.2v-2a4 4 0 0 1 4-4h13.8"/>
+                <path d="M7 21.9l-4-4 4-4"/>
+                <path d="M21 11.8v2a4 4 0 0 1-4 4H3.2"/>
+              </svg>
+              Republicado
+            </span>
           {%- endif -%}
         </span>
         
         <h3>
-          <a class="post-link" href="{{ post.url | relative_url }}">
-            {{ post.title | escape }}
-          </a>
+          {%- if post.external_url -%}
+            <a class="post-link" href="{{ post.external_url }}" target="_blank" rel="noopener noreferrer">
+              {{ post.title | escape }}
+            </a>
+          {%- else -%}
+            <a class="post-link" href="{{ post.url | relative_url }}">
+              {{ post.title | escape }}
+            </a>
+          {%- endif -%}
         </h3>
         {%- if site.show_excerpts -%}
           {{ post.excerpt }}

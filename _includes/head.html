@@ -2,7 +2,32 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {%- seo -%}
+ {%- seo -%}
+
+    {%- if page.external_url -%}
+      <meta name="robots" content="noindex, nofollow">
+    {%- endif -%}
+
+    {%- if page.layout == 'post' and page.external_url == nil -%}
+      <meta name="citation_title" content="{{ page.title | escape }}">
+      
+      {%- if page.authors -%}
+        {%- for author in page.authors -%}
+          {%- assign author_name = author.name | default: author -%}
+          <meta name="citation_author" content="{{ author_name | escape }}">
+          {%- if author.affiliation -%}
+            <meta name="citation_author_institution" content="{{ author.affiliation | escape }}">
+          {%- endif -%}
+        {%- endfor -%}
+      {%- elsif page.author -%}
+        <meta name="citation_author" content="{{ page.author | escape }}">
+      {%- endif -%}
+      
+      <meta name="citation_publication_date" content="{{ page.date | date: '%Y/%m/%d' }}">
+      <meta name="citation_journal_title" content="{{ site.title | escape }}">
+      <meta name="citation_public_url" content="{{ page.url | absolute_url }}">
+  {%- endif -%}
+  
   <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
   {%- feed_meta -%}
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
