@@ -3,7 +3,7 @@ layout: post
 title:  "Las contradicciones del Trabajo Social al interior de la formación profesional"
 date:   2026-09-20 21:04:30 -0300
 categories: reflexiones
-author: Maribel Lombi, Rodrigo Petryla
+author: Maribel Lombi y Rodrigo Petryla
 ---
 Acercándonos cada vez más al final de nuestro recorrido por la Licenciatura en Trabajo Social, nos encontramos con un contexto a nivel nacional e internacional que nos obliga a repensar la articulación que tienen los estudiantes de Trabajo Social con su profesión y con la propia sociedad de la que forman parte. Recordando la famosa diferenciación que Bauman (2002) hizo contraponiendo la modernidad sólida y la modernidad líquida, pensamos que ante nosotros se halla un “exceso”1 de liquidez que pone a prueba tanto a la formación como al ejercicio profesional del Trabajo Social. Durante el gobierno de Milei, de repente, lo que antes se juzgaba sólido se convirtió, o se comenzó a identificar, como algo líquido, amorfo, incontrolable.
 
