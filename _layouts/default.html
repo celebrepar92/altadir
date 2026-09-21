@@ -6,6 +6,10 @@
     <main class="page-content" aria-label="Content">
       <div class="wrapper layout-with-sidebar">
         
+        <div class="main-content">
+          {{ content }}
+        </div>
+
         <aside class="sidebar">
           <nav class="sidebar-nav">
             {%- assign default_paths = site.pages | map: "path" -%}
@@ -20,10 +24,6 @@
             </ul>
           </nav>
         </aside>
-
-        <div class="main-content">
-          {{ content }}
-        </div>
         
       </div>
     </main>

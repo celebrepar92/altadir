@@ -1,18 +1,32 @@
 ---
-# Las dos líneas con guiones son obligatorias para que Jekyll procese SASS
 ---
 @import "minima";
 
-/* Layout de Sidebar */
+/* Fondo personalizado para el header entero */
+.site-header {
+  background-color: #F6F6F4;
+  /* Minima trae un borde superior gris oscuro por defecto.
+     Puedes descomentar la línea de abajo si quieres quitarlo: */
+  /* border-top: none; */
+}
+
+/* Layout ajustado para que no salte de línea antes de tiempo */
 .layout-with-sidebar {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* Fuerza a que se mantengan en la misma línea */
   gap: 3rem;
   margin-top: 2rem;
+  align-items: flex-start; /* Evita que el sidebar crezca a lo alto de la página */
+}
+
+.main-content {
+  flex: 1; /* Toma todo el espacio disponible */
+  min-width: 0; /* Previene desbordamiento de texto o imágenes */
 }
 
 .sidebar {
-  flex: 1 1 200px;
+  width: 200px; /* Ancho fijo para la barra lateral */
+  flex-shrink: 0; /* Evita que la barra lateral se comprima */
 }
 
 .sidebar-nav ul {
@@ -27,21 +41,20 @@
   padding-bottom: 0.5rem;
 }
 
-.main-content {
-  flex: 3 1 600px; /* Toma el espacio restante */
-}
-
-/* Ajuste de la imagen del header */
 .site-title img {
   vertical-align: middle;
   max-width: 100%;
   height: auto;
 }
 
-/* Responsividad para móviles */
+/* En móviles, la barra lateral pasa abajo del contenido */
 @media screen and (max-width: 768px) {
   .layout-with-sidebar {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
+  }
+  
+  .sidebar {
+    width: 100%; /* Toma todo el ancho en móviles */
   }
 }
