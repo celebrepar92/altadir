@@ -1,0 +1,47 @@
+---
+# Las dos líneas con guiones son obligatorias para que Jekyll procese SASS
+---
+@import "minima";
+
+/* Layout de Sidebar */
+.layout-with-sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+.sidebar {
+  flex: 1 1 200px;
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-nav li {
+  margin-bottom: 0.8rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.main-content {
+  flex: 3 1 600px; /* Toma el espacio restante */
+}
+
+/* Ajuste de la imagen del header */
+.site-title img {
+  vertical-align: middle;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Responsividad para móviles */
+@media screen and (max-width: 768px) {
+  .layout-with-sidebar {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
