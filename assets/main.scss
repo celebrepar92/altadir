@@ -37,13 +37,22 @@ body {
   align-items: flex-start; /* Evita que el sidebar crezca a lo alto de la página */
 }
 
+.sidebar-description {
+  font-size: 0.8rem; /* Letra más pequeña */
+  line-height: 1.5; /* Espacio cómodo entre líneas */
+  color: #444; /* Un gris sutil para que no compita con el menú */
+  margin-top: 0;
+  margin-bottom: 1.5rem; /* Separación con los enlaces de abajo */
+  text-align: left;
+}
+
 .main-content {
   flex: 1; /* Toma todo el espacio disponible */
   min-width: 0; /* Previene desbordamiento de texto o imágenes */
 }
 
 .sidebar {
-  width: 200px;
+  width: 250px;
   flex-shrink: 0;
   background-color: #F6F6F4;
   padding: 1rem;
