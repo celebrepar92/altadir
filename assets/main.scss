@@ -25,7 +25,7 @@ body {
 }
 
 .page-content {
-  padding-top: 1rem; 
+  padding-top: 0 !important; /* Elimina el espacio residual debajo del header */
 }
 
 /* Layout ajustado para que no salte de línea antes de tiempo */
@@ -43,8 +43,12 @@ body {
 }
 
 .sidebar {
-  width: 200px; /* Ancho fijo para la barra lateral */
-  flex-shrink: 0; /* Evita que la barra lateral se comprima */
+  width: 200px;
+  flex-shrink: 0;
+  background-color: #F6F6F4;
+  padding: 1rem;
+  border-bottom: 1px solid #e8e8e8; /* Borde inferior típico de Jekyll */
+  box-sizing: border-box; 
 }
 
 .sidebar-nav ul {
@@ -70,28 +74,22 @@ body {
   .layout-with-sidebar {
     flex-direction: column;
     gap: 1.5rem;
+    margin-top: 0 !important; /* Quita la separación superior con el header */
   }
   
   .sidebar {
-    width: auto; /* Permite que el margen funcione bien */
-    margin: 0 1rem; /* Separa un poco la caja de los bordes de la pantalla */
     order: 1; 
-    background-color: #f1f1f1; /* Fondo gris claro */
-    padding: 1rem; /* Espacio interno */
-    border-radius: 8px; /* Bordes ligeramente redondeados */
-    border-bottom: none; /* Quitamos la línea problemática */
-  }
-
-  /* Quitar la línea inferior del último enlace para evitar duplicaciones */
-  .sidebar-nav li:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 0;
+    width: 100vw; /* Toma el 100% del ancho de la pantalla */
+    margin-left: calc(50% - 50vw); /* Rompe los límites del contenedor central */
+    margin-right: calc(50% - 50vw);
+    border-radius: 0; /* Aseguramos bordes rectos */
+    padding: 1rem 15px; /* Mantiene el texto alineado con el resto del contenido */
+    text-align: left;
   }
 
   .main-content {
     order: 2;
-    padding: 0 1rem; /* Alinea el texto de los posts con la caja gris */
+    padding: 0; /* Reseteamos paddings anteriores */
   }
 }
 
@@ -110,4 +108,8 @@ body {
   content: "Suscribirse vía RSS";
   font-size: 1rem;
   margin-left: 5px;
+}
+
+p.rss-subscribe{
+  display: none !important;
 }
