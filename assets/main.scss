@@ -2,6 +2,20 @@
 ---
 @import "minima";
 
+body {
+  font-family: 'Literata', serif;
+}
+
+.post-list-heading {
+  display: none;
+}
+
+.post-title {
+  font-size: 2rem; /* El tamaño por defecto suele ser 2.5rem o mayor. Puedes ajustar este valor a tu gusto (ej: 1.8rem, 2.2rem) */
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
 /* Fondo personalizado para el header entero */
 .site-header {
   background-color: #F6F6F4;
