@@ -20,21 +20,17 @@
 
 title: Ágora Virtual
 email: 
-# description: >- # this means to ignore newlines until "baseurl:"
-# baseurl: "/agora-virtual" # the subpath of your site, e.g. /blog
-url: "https://agoravirtual.com.ar" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: 
-github_username:  
-
-footer_text: "Este sitio está bajo una licencia Creative Commons (CC)."
+description: >- # this means to ignore newlines until "baseurl:"
+  Espacio de pensamiento y acción comprometido con un Trabajo Social situado, soberano y transformador.
+url: "https://agoravirtual.com.ar"
+baseurl: ""
+twitter_username:
+github_username: 
 
 # Build settings
 theme: minima
 plugins:
   - jekyll-feed
-
-minima:
-  skin: dark
 
 # Exclude from processing.
 # The following items will not be processed, by default.
