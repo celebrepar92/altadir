@@ -95,8 +95,14 @@ body {
 
 .post-content p, 
 .post-content li {
-  font-size: 0.95rem; /* Ajustá este valor a tu gusto. El normal es 1rem (aprox 16px) */
-  line-height: 1.7; /* Da un buen espacio entre líneas para que Literata respire */
+  font-size: 0.9rem; /* Aún más pequeño (puedes bajar a 0.85rem si lo ves muy grande) */
+  text-align: justify;
+  line-height: 1.7; /* Mantiene un buen espacio entre líneas para que sea legible */
+}
+
+.post-header {
+  text-align: center;
+  margin-bottom: 2rem; /* Da un poco de aire antes de que empiece el texto */
 }
 
 /* Traducir el enlace de Subscribe vía RSS en el footer */
