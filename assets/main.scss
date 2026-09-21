@@ -19,9 +19,8 @@ body {
 /* Fondo personalizado para el header entero */
 .site-header {
   background-color: #F6F6F4;
-  /* Minima trae un borde superior gris oscuro por defecto.
-     Puedes descomentar la línea de abajo si quieres quitarlo: */
-  /* border-top: none; */
+  border-top: none !important; /* Quita la raya gris superior */
+  margin-top: 0 !important;
 }
 
 /* Layout ajustado para que no salte de línea antes de tiempo */
