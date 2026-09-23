@@ -10,7 +10,7 @@ authors:
 original_publisher: "Prospectiva: Revista de Trabajo Social e Intervención Social"
 original_date: "Octubre 2004"
 original_pages: "19-29"
-# original_url: "https://revistadesafios.wordpress.com/wp-content/uploads/2025/12/desafios-2025-diciembre-2.pdf"
+original_url: "https://revistaprospectiva.univalle.edu.co/index.php/prospectiva/article/view/7351/9830"
 external_url: "https://revistaprospectiva.univalle.edu.co/index.php/prospectiva/article/view/7351/9830"
 ---
 
