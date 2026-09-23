@@ -32,15 +32,9 @@ layout: default
         </span>
         
         <h3>
-          {%- if post.external_url -%}
-            <a class="post-link" href="{{ post.external_url }}" target="_blank" rel="noopener noreferrer">
-              {{ post.title | escape }}
-            </a>
-          {%- else -%}
-            <a class="post-link" href="{{ post.url | relative_url }}">
-              {{ post.title | escape }}
-            </a>
-          {%- endif -%}
+          <a class="post-link" href="{{ post.url | relative_url }}">
+            {{ post.title | escape }}
+          </a>
         </h3>
         {%- if site.show_excerpts -%}
           {{ post.excerpt }}

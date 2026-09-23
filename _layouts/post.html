@@ -54,17 +54,30 @@ layout: default
       {%- endif -%}
     
     <!-- Botón de descarga PDF -->
-    <button id="btn-descargar-pdf" data-html2canvas-ignore="true" style="margin-top: 15px; padding: 6px 12px; background-color: #F6F6F4; border: 1px solid #e8e8e8; border-radius: 4px; cursor: pointer; font-family: inherit;">
-      Descargar artículo en PDF
-    </button>
+    {% if page.external_url %}
+      <!-- Botón para leer artículo externo -->
+      <a href="{{ page.external_url }}" target="_blank" rel="noopener noreferrer" data-html2canvas-ignore="true" style="display: inline-block; margin-top: 15px; padding: 6px 12px; background-color: #F6F6F4; border: 1px solid #e8e8e8; border-radius: 4px; cursor: pointer; font-family: inherit; color: inherit; text-decoration: none;">
+        Leer el artículo
+      </a>
+    {% else %}
+      <!-- Botón de descarga PDF -->
+      <button id="btn-descargar-pdf" data-html2canvas-ignore="true" style="margin-top: 15px; padding: 6px 12px; background-color: #F6F6F4; border: 1px solid #e8e8e8; border-radius: 4px; cursor: pointer; font-family: inherit;">
+        Descargar artículo en PDF
+      </button>
+    {% endif %}
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    {{ content }}
+    {% if page.external_url %}
+      {{ content | replace_first: '<p>', '<p><strong>Resumen:</strong> ' }}
+    {% else %}
+      {{ content }}
+    {% endif %}
   </div>
 
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 
+  {% unless page.external_url %}
   <script>
     document.addEventListener("DOMContentLoaded", function() {
       const primerParrafo = document.querySelector('.post-content p');
@@ -81,80 +94,83 @@ layout: default
       }
     });
   </script>
+  {% endunless %}
 </article>
 
+{% unless page.external_url %}
 <style>
-    /* ESTILOS EXCLUSIVOS PARA LA EXPORTACIÓN A PDF */
-    @media print {
-      /* 1. Ocultar todos los elementos de la web que no van en el documento */
-      .site-header, .site-footer, .sidebar, #btn-descargar-pdf {
-        display: none !important;
-      }
-      
-      /* 2. Forzar al artículo a usar el 100% del ancho de la hoja */
-      .layout-with-sidebar {
-        display: block !important;
-        margin: 0 !important;
-      }
-      .main-content {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding: 0 !important;
-      }
-      
-      /* 3. Reglas de quiebre de página perfectas */
-      article { page-break-before: auto; }
-      
-      p, li { 
-        page-break-inside: auto; /* Permite que el texto fluya a la siguiente hoja naturalmente */
-      }
-      
-      h1, h2, h3, h4 { 
-        page-break-after: avoid; /* Evita que un título quede solo al final de una página */
-      }
-      
-      img { 
-        page-break-inside: avoid; /* Evita que las imágenes se corten por la mitad */
-        max-width: 100% !important;
-      }
-      
-      /* 4. Configurar el tamaño y márgenes de la hoja A4 */
-      @page {
-        size: A4 portrait;
-        margin: 20mm 15mm 20mm 15mm;
-      }
+  /* ESTILOS EXCLUSIVOS PARA LA EXPORTACIÓN A PDF */
+  @media print {
+    /* 1. Ocultar todos los elementos de la web que no van en el documento */
+    .site-header, .site-footer, .sidebar, #btn-descargar-pdf {
+      display: none !important;
     }
-  </style>
+    
+    /* 2. Forzar al artículo a usar el 100% del ancho de la hoja */
+    .layout-with-sidebar {
+      display: block !important;
+      margin: 0 !important;
+    }
+    .main-content {
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+    }
+    
+    /* 3. Reglas de quiebre de página perfectas */
+    article { page-break-before: auto; }
+    
+    p, li { 
+      page-break-inside: auto; /* Permite que el texto fluya a la siguiente hoja naturalmente */
+    }
+    
+    h1, h2, h3, h4 { 
+      page-break-after: avoid; /* Evita que un título quede solo al final de una página */
+    }
+    
+    img { 
+      page-break-inside: avoid; /* Evita que las imágenes se corten por la mitad */
+      max-width: 100% !important;
+    }
+    
+    /* 4. Configurar el tamaño y márgenes de la hoja A4 */
+    @page {
+      size: A4 portrait;
+      margin: 20mm 15mm 20mm 15mm;
+    }
+  }
+</style>
 
-  <script>
-    document.getElementById('btn-descargar-pdf').addEventListener('click', function () {
-      // Verificamos si el bloque de la fuente ya se agregó para no duplicarlo al hacer varios clics
-      if (!document.getElementById('pdf-footer-info')) {
-        
-        // Calcular fecha y hora de acceso
-        const fechaActual = new Date();
-        const fechaFormateada = fechaActual.toLocaleDateString('es-AR') + ' a las ' + fechaActual.toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'});
-        
-        // Crear el bloque de pie de página
-        const footerDiv = document.createElement('div');
-        footerDiv.id = 'pdf-footer-info';
-        footerDiv.style.marginTop = '40px';
-        footerDiv.style.paddingTop = '20px';
-        footerDiv.style.borderTop = '1px solid #ccc';
-        footerDiv.style.fontSize = '0.85em';
-        footerDiv.style.color = '#555';
-        
-        // Insertar el contenido con la URL de Jekyll y la fecha generada
-        footerDiv.innerHTML = `
-          <p style="margin: 0; padding: 0;"><strong>Fuente:</strong> https://altadir.com.ar{{ page.url }}</p>
-          <p style="margin: 5px 0 0 0; padding: 0;"><strong>Recuperado el:</strong> ${fechaFormateada}</p>
-        `;
-        
-        // Añadir el bloque al final del artículo
-        document.querySelector('article.post').appendChild(footerDiv);
-      }
+<script>
+  document.getElementById('btn-descargar-pdf').addEventListener('click', function () {
+    // Verificamos si el bloque de la fuente ya se agregó para no duplicarlo al hacer varios clics
+    if (!document.getElementById('pdf-footer-info')) {
       
-      // Llamar al motor de PDF nativo del navegador
-      window.print();
-    });
-  </script>
+      // Calcular fecha y hora de acceso
+      const fechaActual = new Date();
+      const fechaFormateada = fechaActual.toLocaleDateString('es-AR') + ' a las ' + fechaActual.toLocaleTimeString('es-AR', {hour: '2-digit', minute:'2-digit'});
+      
+      // Crear el bloque de pie de página
+      const footerDiv = document.createElement('div');
+      footerDiv.id = 'pdf-footer-info';
+      footerDiv.style.marginTop = '40px';
+      footerDiv.style.paddingTop = '20px';
+      footerDiv.style.borderTop = '1px solid #ccc';
+      footerDiv.style.fontSize = '0.85em';
+      footerDiv.style.color = '#555';
+      
+      // Insertar el contenido con la URL de Jekyll y la fecha generada
+      footerDiv.innerHTML = `
+        <p style="margin: 0; padding: 0;"><strong>Fuente:</strong> https://altadir.com.ar{{ page.url }}</p>
+        <p style="margin: 5px 0 0 0; padding: 0;"><strong>Recuperado el:</strong> ${fechaFormateada}</p>
+      `;
+      
+      // Añadir el bloque al final del artículo
+      document.querySelector('article.post').appendChild(footerDiv);
+    }
+    
+    // Llamar al motor de PDF nativo del navegador
+    window.print();
+  });
+</script>
+{% endunless %}
