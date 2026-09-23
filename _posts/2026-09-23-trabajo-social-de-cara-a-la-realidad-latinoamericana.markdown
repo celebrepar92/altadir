@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Trabajo Social de cara a la realidad latinoamericana"
-date:   2026-09-23 21:04:30 -0300
+date:   2026-09-23 10:04:30 -0300
 categories: ponencias
 authors:
   - name: José Paulo Netto
@@ -10,7 +10,7 @@ authors:
 original_publisher: "Prospectiva: Revista de Trabajo Social e Intervención Social"
 original_date: "Octubre 2004"
 original_pages: "19-29"
-original_url: "https://revistaprospectiva.univalle.edu.co/index.php/prospectiva/article/view/7351/9830"
+# original_url: "https://revistaprospectiva.univalle.edu.co/index.php/prospectiva/article/view/7351/9830"
 external_url: "https://revistaprospectiva.univalle.edu.co/index.php/prospectiva/article/view/7351/9830"
 ---
 
