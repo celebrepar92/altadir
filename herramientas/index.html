@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Herramientas útiles para el análisis cualitativo y el TFG</title>
+<meta name="description" content="Guía de la Cátedra de Taller TFG sobre herramientas para la investigación cualitativa: Google Académico, Zotero, Taguette, QualCoder, Markdown, LaTeX, BibTeX, Git y Python.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --surface:#fff; --surface-dim:#f5f5f5; --surface-container-low:#f7f7f7;
+  --surface-container:#eee; --surface-container-high:#e2e2e2; --surface-container-highest:#d6d6d6;
+  --on-surface:#1c1c1c; --on-surface-variant:#5c5c5c; --outline:#8a8a8a;
+  --outline-variant:#d8d8d8; --primary:#1c1c1c; --on-primary:#fff;
+  --inverse-surface:#1c1c1c; --inverse-on-surface:#f4f4f4;
+  --shape-xs:4px; --shape-sm:8px; --shape-md:12px; --shape-lg:16px; --shape-xl:28px;
+  --el2:0 1px 2px rgba(0,0,0,.30),0 2px 6px 2px rgba(0,0,0,.15);
+  --el3:0 1px 3px rgba(0,0,0,.30),0 4px 8px 3px rgba(0,0,0,.15);
+  --max:760px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+}
+body{margin:0;background:var(--surface-dim);color:var(--on-surface);font-family:"Roboto","Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+::selection{background:var(--on-surface);color:var(--surface)}
+a{color:var(--on-surface);text-decoration-thickness:1px;text-underline-offset:2px}
+a:hover{color:var(--on-surface-variant)}
+:focus-visible{outline:2px solid var(--on-surface);outline-offset:2px}
+img{max-width:100%;display:block}
+section.card{scroll-margin-top:88px;position:relative}
+
+.app-bar{position:sticky;top:0;z-index:30;background:var(--surface);border-bottom:1px solid var(--outline-variant)}
+.app-bar-inner{max-width:var(--max);margin:0 auto;padding:0 1.25rem;height:64px;display:flex;align-items:center;gap:.9rem}
+.app-bar-avatar{width:36px;height:36px;border-radius:var(--shape-sm);background:var(--primary);color:var(--on-primary);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;letter-spacing:.02em;flex:none}
+.app-bar-title{font-size:1.06rem;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.page-header{max-width:var(--max);margin:0 auto;padding:2.4rem 1.25rem 1.6rem}
+.page-header h1{font-size:clamp(1.7rem,4.6vw,2.35rem);line-height:1.2;font-weight:400;margin:0 0 .85rem;letter-spacing:-.01em}
+.page-header p{font-size:1rem;color:var(--on-surface-variant);margin:0 0 1.2rem;max-width:56ch}
+.chip-row{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{display:inline-flex;align-items:center;height:32px;padding:0 .9rem;border:1px solid var(--outline-variant);border-radius:var(--shape-sm);font-size:.8rem;color:var(--on-surface-variant);background:var(--surface)}
+
+main{max-width:var(--max);margin:0 auto;padding:0 1.25rem 5rem;display:flex;flex-direction:column;gap:1.1rem}
+.card{background:var(--surface);border:1px solid var(--outline-variant);border-radius:var(--shape-lg);overflow:hidden}
+.card-pad{padding:1.4rem 1.5rem}
+.overline{font-size:.72rem;font-weight:500;letter-spacing:.06em;color:var(--on-surface-variant);margin:0 0 .5rem}
+.intro h2{font-size:1.3rem;font-weight:500;margin:0 0 .9rem}
+.intro p{margin:0 0 1rem}.intro p:last-child{margin-bottom:0}
+.callout{display:flex;gap:.9rem;background:var(--surface-container-low);border-radius:var(--shape-md);padding:1rem 1.1rem;margin-top:1.1rem}
+.callout-icon{flex:none;width:22px;height:22px;color:var(--on-surface-variant)}
+.callout p{margin:0;font-size:.94rem;color:var(--on-surface-variant)}
+.callout strong{color:var(--on-surface)}
+
+.toc-list{list-style:none;margin:0;padding:.4rem 0}
+.toc-row{display:flex;align-items:center;gap:1rem;padding:.7rem 1.5rem;text-decoration:none;color:var(--on-surface);position:relative}
+.toc-row:hover{background:var(--surface-container-low)}
+.toc-index{flex:none;width:28px;height:28px;border-radius:50%;background:var(--surface-container);color:var(--on-surface-variant);font-size:.72rem;font-weight:500;display:flex;align-items:center;justify-content:center;font-family:"Roboto Mono",monospace}
+.toc-text{flex:1;font-size:.96rem}
+.divider{height:1px;background:var(--outline-variant);margin:0 1.5rem}
+
+details.chapter{border:none}
+details.chapter>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:1rem;padding:1.2rem 1.5rem;-webkit-tap-highlight-color:transparent;user-select:none}
+details.chapter>summary::-webkit-details-marker{display:none}
+details.chapter>summary:hover{background:var(--surface-container-low)}
+details.chapter[open]>summary{border-bottom:1px solid var(--outline-variant)}
+details.chapter>summary{transition:background .18s ease, border-color .22s ease}
+details.chapter .chapter-body{overflow:hidden;transition:max-height .34s cubic-bezier(.2,.7,.2,1),opacity .24s ease,transform .34s cubic-bezier(.2,.7,.2,1)}
+details.chapter:not([open]) .chapter-body{max-height:0!important;opacity:0;transform:translateY(-6px);padding-top:0;padding-bottom:0}
+details.chapter[open] .chapter-body{opacity:1;transform:translateY(0)}
+details.chapter.is-opening .chapter-body{animation:moduleOpen .34s cubic-bezier(.2,.7,.2,1)}
+details.chapter.is-closing .chapter-body{animation:moduleClose .28s cubic-bezier(.4,0,.7,1)}
+@keyframes moduleOpen{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes moduleClose{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(-8px)}}
+.chapter-index{flex:none;width:40px;height:40px;border-radius:50%;background:var(--primary);color:var(--on-primary);display:flex;align-items:center;justify-content:center;font-size:.95rem;font-weight:500;font-family:"Roboto Mono",monospace}
+.chapter-heading{flex:1;min-width:0}
+.chapter-eyebrow{font-size:.72rem;color:var(--on-surface-variant);margin:0 0 .15rem;display:block}
+.chapter-title{font-size:1.08rem;font-weight:500;margin:0;line-height:1.32}
+.chevron{flex:none;width:24px;height:24px;color:var(--on-surface-variant);transition:transform .2s ease}
+details.chapter[open] .chevron{transform:rotate(180deg)}
+.chapter-body{padding:1.5rem;max-height:none}
+.chapter-body p{margin:0 0 1.1rem}
+.chapter-body p:last-child{margin-bottom:0}
+
+.module-anchor{position:absolute;top:18px;right:56px;width:32px;height:32px;border:1px solid var(--outline-variant);border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;color:var(--on-surface-variant);font-family:"Roboto Mono",monospace;font-size:.84rem;background:var(--surface);z-index:2}
+.module-anchor:hover{background:var(--surface-container-low);color:var(--on-surface)}
+
+.subsection{margin-top:1.8rem;padding-top:1.6rem;border-top:1px solid var(--outline-variant)}
+.subsection:first-child{margin-top:.4rem;padding-top:0;border-top:none}
+.sub-title{font-size:1rem;font-weight:500;margin:0 0 .9rem}
+
+figure{margin:1.2rem 0;border:1px solid var(--outline-variant);border-radius:var(--shape-md);overflow:hidden;background:var(--surface-container-low)}
+figure img{display:block}figcaption{font-size:.76rem;color:var(--on-surface-variant);padding:.6rem .8rem;border-top:1px solid var(--outline-variant)}
+
+.video-frame{position:relative;width:100%;padding-top:56.25%;margin:1.2rem 0;border-radius:var(--shape-md);overflow:hidden;border:1px solid var(--outline-variant);background:var(--surface-container-highest)}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-help{font-size:.8rem;color:var(--on-surface-variant);margin:-.65rem 0 1.2rem}
+.video-help a{color:var(--on-surface)}
+
+code{font-family:"Roboto Mono",monospace;font-size:.86em;background:var(--surface-container-low);padding:.12em .4em;border-radius:4px;border:1px solid var(--outline-variant)}
+pre{font-family:"Roboto Mono",monospace;font-size:.82rem;line-height:1.65;background:var(--inverse-surface);color:var(--inverse-on-surface);padding:1rem 1.15rem;overflow-x:auto;margin:1.2rem 0;border-radius:var(--shape-md)}
+
+.btn-row{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0 1.3rem}
+.btn{height:40px;padding:0 1.25rem;border-radius:999px;font-size:.86rem;font-weight:500;display:inline-flex;align-items:center;gap:.5rem;text-decoration:none;cursor:pointer;border:1px solid var(--outline);background:transparent;color:var(--on-surface);transition:background .15s ease}
+.btn svg{width:18px;height:18px}.btn:hover{background:var(--surface-container-low)}
+.btn.filled{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}.btn.filled:hover{background:#3a3a3a;border-color:#3a3a3a}
+aside.note{background:var(--surface-container-low);border-radius:var(--shape-md);padding:1rem 1.15rem;margin:1rem 0 1.3rem;font-size:.94rem}
+aside.note .note-label{font-size:.7rem;font-weight:500;letter-spacing:.04em;color:var(--on-surface-variant);display:block;margin-bottom:.4rem}
+aside.note p{margin:0;color:var(--on-surface-variant)}aside.note a{color:var(--on-surface)}
+
+.share-card{padding:1.4rem 1.5rem}.share-title{font-size:.95rem;font-weight:500;margin:0 0 1rem}
+.icon-btn-row{display:flex;flex-wrap:wrap;gap:.6rem}.icon-btn{width:40px;height:40px;border-radius:50%;background:var(--surface-container);border:none;display:flex;align-items:center;justify-content:center;color:var(--on-surface);cursor:pointer;text-decoration:none}.icon-btn:hover{background:var(--surface-container-high)}.icon-btn svg{width:18px;height:18px}
+
+footer{max-width:var(--max);margin:0 auto;padding:0 1.25rem 3rem;font-size:.76rem;color:var(--on-surface-variant);text-align:center}
+.fab{position:fixed;right:1.25rem;bottom:1.25rem;width:48px;height:48px;border-radius:var(--shape-lg);background:var(--primary);color:var(--on-primary);border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--el2);opacity:0;transform:translateY(10px);pointer-events:none;transition:opacity .2s ease,transform .2s ease,box-shadow .15s ease;z-index:25}
+.fab:hover{box-shadow:var(--el3)}.fab.show{opacity:1;transform:translateY(0);pointer-events:auto}.fab svg{width:20px;height:20px}
+.snackbar{position:fixed;left:50%;bottom:1.5rem;transform:translate(-50%,16px);background:var(--inverse-surface);color:var(--inverse-on-surface);padding:.85rem 1.3rem;border-radius:var(--shape-xs);font-size:.86rem;box-shadow:var(--el2);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;z-index:40}.snackbar.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:480px){
+  .chapter-index{width:34px;height:34px;font-size:.82rem}
+  details.chapter>summary{padding:1rem 1.1rem;gap:.8rem}
+  .chapter-body{padding:1.1rem}.card-pad{padding:1.1rem}
+  .module-anchor{right:48px;top:16px;width:30px;height:30px}
+}
+</style>
+</head>
+<body>
+<div class="app-bar">
+  <div class="app-bar-inner">
+    <div class="app-bar-title">Herramientas para el TFG</div>
+  </div>
+</div>
+
+<header class="page-header">
+  <h1>Herramientas útiles para el análisis cualitativo y el TFG</h1>
+  <p>Una guía de la Cátedra de Taller TFG para automatizar tareas mecánicas y dedicar más tiempo a la investigación.</p>
+</header>
+
+<main>
+  <nav class="card" aria-label="Índice">
+    <div class="card-pad" style="padding-bottom:.4rem;"><p class="overline">ÍNDICE</p></div>
+    <ul class="toc-list"><li class="toc-item"><a class="toc-row" href="#introduccion"><span class="toc-index">–</span><span class="toc-text">Introducción</span></a></li><div class="divider"></div><li class="toc-item"><a class="toc-row" href="#google-academico"><span class="toc-index">1</span><span class="toc-text">Google Académico</span></a></li><div class="divider"></div><li class="toc-item"><a class="toc-row" href="#zotero"><span class="toc-index">2</span><span class="toc-text">Gestión bibliográfica: Zotero</span></a></li><div class="divider"></div><li class="toc-item"><a class="toc-row" href="#taguette"><span class="toc-index">3</span><span class="toc-text">Taguette</span></a></li><div class="divider"></div><li class="toc-item"><a class="toc-row" href="#qualcoder"><span class="toc-index">4</span><span class="toc-text">QualCoder</span></a></li><div class="divider"></div><li class="toc-item"><a class="toc-row" href="#markdown"><span class="toc-index">5</span><span class="toc-text">Markdown</span></a></li><div class="divider"></div><li class="toc-item"><a class="toc-row" href="#latex"><span class="toc-index">6</span><span class="toc-text">LaTeX</span></a></li><div class="divider"></div><li class="toc-item"><a class="toc-row" href="#bibtex"><span class="toc-index">7</span><span class="toc-text">BibTeX</span></a></li><div class="divider"></div><li class="toc-item"><a class="toc-row" href="#betterbibtex"><span class="toc-index">8</span><span class="toc-text">Better BibTeX</span></a></li><div class="divider"></div><li class="toc-item"><a class="toc-row" href="#git"><span class="toc-index">9</span><span class="toc-text">Git</span></a></li><div class="divider"></div><li class="toc-item"><a class="toc-row" href="#python"><span class="toc-index">10</span><span class="toc-text">Python</span></a></li></ul>
+  </nav>
+
+  <section class="card intro" id="introduccion">
+    <div class="card-pad"> <p class="overline">INTRODUCCIÓN</p> <h2>Por qué esta lista</h2> <p>En Trabajo Social, los procesos de investigación e intervención cualitativa suelen verse entorpecidos por tareas mecánicas y repetitivas que generan cuellos de botella y sobrecargan el esfuerzo intelectual.</p> <p>La gestión de citas APA, el control de versiones de un documento, la búsqueda de bibliografía dispersa: nada de esto forma parte directa de la producción de conocimiento, y sin embargo consume buena parte del tiempo de investigación. Identificar estas tareas resulta crucial para facilitar la labor del trabajador social. Al ser procedimientos sistemáticos, es posible corregirlos o automatizarlos mediante herramientas específicas, liberando así tiempo valioso para los aspectos importantes de la investigación o intervención.</p> <p>La siguiente es una lista de algunas de las herramientas útiles para este propósito. Las dividiremos en un buscador académico, herramientas de gestión bibliográfica, herramientas de análisis cualitativo, y herramientas técnicas. Estas últimas, si bien son muy capaces y poderosas, tienen una curva de aprendizaje mucho más pronunciada que las demás.</p> <div class="callout"> <svg class="callout-icon" fill="none" stroke="currentColor" stroke-width="1.7" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 16v-5M12 8h.01"></path></svg> <p><strong>Cómo usar esta guía.</strong> Las explicaciones no están completas y no incluyen todos los aspectos útiles, sino sólo los más importantes y esenciales. Cada módulo se despliega tocando su título; al abrir uno, el resto se cierra automáticamente. Todos los módulos tienen un enlace directo propio. En caso de querer profundizar y no saber cómo, mirá los tutoriales incluidos en cada apartado y/o consultá con el equipo de cátedra.</p> </div> </div>
+  </section>
+
+  
+<section class="card" id="google-academico">
+  <a class="module-anchor" href="#google-academico" title="Enlace directo a este módulo" aria-label="Enlace directo a Google Académico">#</a>
+  <details class="chapter" data-module>
+    <summary>
+      <span class="chapter-index">1</span>
+      <span class="chapter-heading">
+        <span class="chapter-eyebrow">Punto de partida</span>
+        <h2 class="chapter-title">Google Académico</h2>
+      </span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="chapter-body">
+      <p><strong><a href="https://scholar.google.com/" rel="noopener" target="_blank">Google Académico</a></strong> (Google Scholar) es el punto de partida casi obligado de cualquier investigación, y por eso lo ubicamos antes que el resto: antes de gestionar, codificar o escribir, hay que encontrar qué leer. A diferencia del buscador general de Google, este motor indexa exclusivamente literatura académica: artículos de revistas, tesis, libros, ponencias de congresos y resúmenes de organismos académicos y editoriales. Es gratuito, no requiere instalación, y funciona directamente desde el navegador.</p> 
+
+    <p>Su función más simple es también la más usada: buscar por palabras clave y obtener resultados ordenados por relevancia, considerando el texto completo del trabajo, el autor, la publicación en la que apareció y la frecuencia con la que otros lo citaron. Los filtros de la columna izquierda permiten acotar la búsqueda por año, lo que resulta especialmente útil al armar el estado del arte de una tesis, donde suele pedirse privilegiar bibliografía reciente.</p><p>La función <em>"Citado por"</em>, debajo de cada resultado, es probablemente la herramienta de descubrimiento más potente de la plataforma: permite ver todos los trabajos posteriores que citaron ese artículo, lo que sirve tanto para medir su impacto como para encontrar investigaciones más nuevas sobre el mismo tema. De forma inversa, el enlace <em>"Artículos relacionados"</em> sugiere trabajos con temática similar aunque no exista una cita directa entre ellos.</p><p>Otras dos funciones son especialmente convenientes para una tesis de grado. Primero, las <strong>alertas</strong>: se puede pedir que Google Académico avise por correo cuando se publique algo nuevo que coincida con una búsqueda o un autor en particular, lo que mantiene actualizada la bibliografía sin tener que volver a buscar manualmente. Segundo, el ícono de comillas debajo de cada resultado genera automáticamente la cita en formato APA, MLA o Chicago, y también permite exportarla directamente en formato BibTeX o RIS, compatible con Zotero y otros gestores bibliográficos que veremos a continuación.</p><div class="btn-row">
+<a class="btn filled" href="https://scholar.google.com/" rel="noopener" target="_blank">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>  
+        Ir a Google Académico  
+      </a>
+<a class="btn" href="https://scholar.google.com/intl/es/scholar/help.html" rel="noopener" target="_blank">Ayuda oficial</a>
+</div><p>Conviene aclarar sus límites. No todo lo que indexa Google Académico está revisado por pares: mezcla artículos publicados en revistas serias con tesis no evaluadas, borradores, y páginas de dudosa calidad académica. La responsabilidad de verificar la fuente sigue siendo del investigador. Tampoco reemplaza a las bases de datos especializadas de cada disciplina, que suelen ofrecer metadatos más precisos y filtros más finos. Aun así, como puerta de entrada rápida, gratuita, y conectada con el resto del flujo de trabajo bibliográfico, es difícil de superar.</p><aside class="note">
+<span class="note-label">EL CIRCUITO COMPLETO</span>
+<p>Un flujo de trabajo típico combina las tres capas siguientes: Google Académico para <em>descubrir</em> bibliografía, Zotero para <em>guardarla y organizarla</em>, y BibTeX para <em>citarla</em> de forma automática dentro del documento final. Cada capítulo de esta guía cubre una de esas capas.</p>
+</aside>
+      
+    </div>
+  </details>
+</section>
+<section class="card" id="zotero">
+  <a class="module-anchor" href="#zotero" title="Enlace directo a este módulo" aria-label="Enlace directo a Zotero">#</a>
+  <details class="chapter" data-module>
+    <summary>
+      <span class="chapter-index">2</span>
+      <span class="chapter-heading">
+        <span class="chapter-eyebrow">Gestión bibliográfica</span>
+        <h2 class="chapter-title">Zotero</h2>
+      </span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="chapter-body">
+       
+
+    <div class="video-frame">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/cOweYm7oaZI?rel=0&amp;modestbranding=1&amp;playsinline=1&amp;enablejsapi=1" title="Tutorial de Zotero"></iframe>
+</div><p class="video-help">¿El reproductor muestra un error? <a href="https://www.youtube.com/watch?v=cOweYm7oaZI" rel="noopener" target="_blank">Abrir este tutorial directamente en YouTube</a></p><p>Para la gestión bibliográfica, nos centraremos en <strong><a href="https://es.wikipedia.org/wiki/Zotero" rel="noopener" target="_blank">Zotero</a></strong>, uno de los estándares de la industria junto a otros como <a href="https://es.wikipedia.org/wiki/Mendeley" rel="noopener" target="_blank">Mendeley</a>. Elegimos Zotero porque es de <a href="https://es.wikipedia.org/wiki/C%C3%B3digo_abierto" rel="noopener" target="_blank">código abierto</a>, gratuito, y más flexible, ya que sus funcionalidades pueden expandirse a conveniencia. Se distribuye como una aplicación compatible con Windows, Mac, iOS y Android; no tiene versión accesible desde el navegador, sino que es necesario descargarla.</p><figure>
+<img alt="Interfaz de Zotero 7 en macOS" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/Zotero_7_on_macOS.png/1280px-Zotero_7_on_macOS.png"/>
+<figcaption>Interfaz principal de Zotero 7 en macOS (imagen ilustrativa).</figcaption>
+</figure><p>La interfaz se organiza en tres secciones principales. En la <em>columna izquierda</em> se ubican las carpetas que el usuario crea para clasificar artículos, capítulos de libros, ponencias u otros documentos, estructurando la información en secciones temáticas para distintos proyectos. En la parte inferior de esa misma columna se listan las etiquetas asociadas a los elementos de la carpeta seleccionada, útiles para catalogar y buscar documentos.</p><p>En la <em>columna central</em> se listan los documentos de la carpeta seleccionada, cada uno con el apellido del autor y el año. Al hacer doble clic, Zotero abre un lector de PDF que se puede anotar y resaltar libremente. Esta columna incluye además un buscador de documentos y otras herramientas útiles en la esquina superior.</p><p>Zotero es completamente gratis y de código abierto, e incluye sincronización en la nube con un límite gratuito de 300 MB, lo que permite subir bibliografía desde la computadora y consultarla en cualquier dispositivo móvil.</p><figure>
+<img alt="Extensión de Zotero funcionando dentro de Google Docs" src="https://i.ibb.co/dsvGGDNq/zotero1.jpg"/>
+<figcaption>La extensión de Zotero integrada en Google Docs (imagen ilustrativa).</figcaption>
+</figure><p>Zotero también incluye una extensión para Google Chrome que, luego de instalada, escanea automáticamente documentos abiertos en el navegador y los incorpora a una carpeta sin que el usuario tenga que ingresar nada manualmente. La misma extensión permite usar Zotero dentro de Google Docs o Word mediante una nueva pestaña: allí, la primera opción permite agregar una nueva cita, seleccionando alguna de las guardadas en la biblioteca. Uno de los aspectos más útiles de Zotero es que, mediante esta extensión, las citas APA y la sección de referencias se generan automáticamente, sin necesidad de escribirlas a mano.</p><div class="btn-row">
+<a class="btn filled" href="https://www.zotero.org/" rel="noopener" target="_blank">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path></svg>  
+        Descargar Zotero  
+      </a>
+<a class="btn" href="https://chromewebstore.google.com/detail/zotero-connector/ekhagklcjbdpajgpjgmbionohlpdbjgc?hl=es" rel="noopener" target="_blank">Extensión para Chrome</a>
+</div>
+      
+    </div>
+  </details>
+</section>
+<section class="card" id="taguette">
+  <a class="module-anchor" href="#taguette" title="Enlace directo a este módulo" aria-label="Enlace directo a Taguette">#</a>
+  <details class="chapter" data-module>
+    <summary>
+      <span class="chapter-index">3</span>
+      <span class="chapter-heading">
+        <span class="chapter-eyebrow">Análisis cualitativo</span>
+        <h2 class="chapter-title">Taguette</h2>
+      </span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="chapter-body">
+      <div class="video-frame">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/SGOg9-eIWWQ?rel=0&amp;modestbranding=1&amp;playsinline=1&amp;enablejsapi=1" title="Tutorial de Taguette"></iframe>
+</div><p class="video-help">¿El reproductor muestra un error? <a href="https://www.youtube.com/watch?v=SGOg9-eIWWQ" rel="noopener" target="_blank">Abrir este tutorial directamente en YouTube</a></p><p><strong><a href="https://www.taguette.org/" rel="noopener" target="_blank">Taguette</a></strong> es una plataforma sumamente accesible e intuitiva, pensada para aligerar la codificación abierta en una investigación. Como Zotero, puede instalarse en la computadora, pero su gran ventaja es que también puede usarse de forma online, directamente desde el navegador.</p><p>Permite importar diversos tipos de archivos (Word, texto sin formato, HTML, EPUB, MOBI) y comenzar a trabajar inmediatamente catalogando con etiquetas diferentes partes del texto. Se hace resaltando alguna palabra, oración o párrafo que se considere importante.</p><figure>
+<img alt="Interfaz de Taguette mostrando etiquetas y fragmentos destacados" src="https://www.taguette.org/imgs/14-seeAllHighlights.png"/>
+<figcaption>Vista de fragmentos destacados en Taguette (imagen ilustrativa).</figcaption>
+</figure><p>Uno de sus puntos más fuertes, y algo que lo diferencia de otras alternativas, es que permite <em>colaborar con otras personas online en tiempo real</em>: varias personas pueden trabajar en un mismo archivo al mismo tiempo, como sucede con Google Drive. Un usuario puede invitar a colegas, compañeros o tutores al proyecto y asignar roles ("solo lectura" o "edición completa"), viendo los cambios de los demás al instante.</p><p>Taguette mantiene una interfaz minimalista, con columnas para documentos, códigos y fragmentos resaltados, pero no cuenta con funciones para graficar ni para realizar codificación axial, algo a veces necesario en proyectos más complejos, aunque no será necesario al momento de hacer una tesis de grado. Lo compensa con muchas opciones de exportación: se puede exportar la vista de resultados, citas y el "libro de códigos" a Excel o Word.</p><div class="btn-row">
+<a class="btn filled" href="https://www.taguette.org/" rel="noopener" target="_blank">Usar Taguette online</a>
+</div>
+      
+    </div>
+  </details>
+</section>
+<section class="card" id="qualcoder">
+  <a class="module-anchor" href="#qualcoder" title="Enlace directo a este módulo" aria-label="Enlace directo a QualCoder">#</a>
+  <details class="chapter" data-module>
+    <summary>
+      <span class="chapter-index">4</span>
+      <span class="chapter-heading">
+        <span class="chapter-eyebrow">Análisis cualitativo</span>
+        <h2 class="chapter-title">QualCoder</h2>
+      </span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="chapter-body">
+      <div class="video-frame">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/K2zzA8l0mAk?rel=0&amp;modestbranding=1&amp;playsinline=1&amp;enablejsapi=1" title="Tutorial de QualCoder"></iframe>
+</div><p class="video-help">¿El reproductor muestra un error? <a href="https://www.youtube.com/watch?v=K2zzA8l0mAk" rel="noopener" target="_blank">Abrir este tutorial directamente en YouTube</a></p><aside class="note">
+<span class="note-label">SOBRE EL TUTORIAL</span>
+<p>El video adjunto no cuenta cómo descargar QualCoder ni subir un archivo, ya que eso corresponde a una primera parte no disponible en YouTube. Dos tutoriales de otro autor cubren ese paso: <a href="https://www.youtube.com/watch?v=Te5f4fMGVws" rel="noopener" target="_blank">cómo instalarlo</a> y <a href="https://www.youtube.com/watch?v=UQGdRdZci-Y" rel="noopener" target="_blank">cómo crear proyectos y citas</a>.</p>
+</aside><p><strong><a href="https://qualcoder.org/doc/es/#current-release/" rel="noopener" target="_blank">QualCoder</a></strong> es otra potente herramienta gratuita de escritorio (requiere instalación, no se puede usar online) que ofrece un entorno más robusto que Taguette para la organización y categorización jerárquica de la información, útil cuando el volumen de datos empieza a crecer.</p><p>Además de procesar textos o transcripciones de entrevistas de forma clásica, QualCoder permite codificar directamente sobre fotografías, imágenes, videos y audios, ampliando enormemente las posibilidades metodológicas. Al igual que Taguette, permite agrupar códigos en "categorías" o familias superiores, arrastrando y soltando elementos en una estructura de árbol visual que ayuda a pulir y fusionar conceptos.</p><figure>
+<img alt="Árbol visual de categorías en QualCoder" src="https://i.ytimg.com/vi/zmdREZTAqcA/maxresdefault.jpg"/>
+<figcaption>Árbol visual de categorías en QualCoder (imagen ilustrativa).</figcaption>
+</figure><figure>
+<img alt="Interfaz principal de QualCoder" src="https://i.ytimg.com/vi/CcHNdqsR_E4/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGGEgYShhMA8=&amp;rs=AOn4CLCcKSmu5JDbfu1AehhjkB6wQa7-GA"/>
+<figcaption>Interfaz principal de QualCoder (imagen ilustrativa).</figcaption>
+</figure><p>QualCoder también permite agrupar varios documentos bajo un mismo "caso", y tiene una función de reportes que genera tablas y matrices para cruzar datos, visualizar qué códigos aparecen en qué documentos y facilitar la redacción de las conclusiones. Es un entorno mucho más completo que el de Taguette, aunque sin la posibilidad de colaborar online.</p><div class="btn-row">
+<a class="btn filled" href="https://qualcoder.org/doc/es/#current-release/" rel="noopener" target="_blank">Descargar QualCoder</a>
+</div><p>Al igual que sucede con Zotero, la adopción de estas herramientas requiere un esfuerzo inicial. Sin embargo, el tiempo invertido en familiarizarse con la interfaz se recupera rápidamente, evitando el caos de los documentos de Word llenos de comentarios y resaltadores de colores, o desparramados por mil carpetas distintas. Cuanto más eficiente y organizada esté la investigación, más rápido y fácil se la terminará.</p>
+      
+    </div>
+  </details>
+</section>
+<section class="card" id="markdown">
+  <a class="module-anchor" href="#markdown" title="Enlace directo a este módulo" aria-label="Enlace directo a Markdown">#</a>
+  <details class="chapter" data-module>
+    <summary>
+      <span class="chapter-index">5</span>
+      <span class="chapter-heading">
+        <span class="chapter-eyebrow">Herramientas técnicas</span>
+        <h2 class="chapter-title">Markdown</h2>
+      </span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="chapter-body">
+      <div class="video-frame">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/X5mkZXmaKp4?rel=0&amp;modestbranding=1&amp;playsinline=1&amp;enablejsapi=1" title="Tutorial de Markdown"></iframe>
+</div><p class="video-help">¿El reproductor muestra un error? <a href="https://www.youtube.com/watch?v=X5mkZXmaKp4" rel="noopener" target="_blank">Abrir este tutorial directamente en YouTube</a></p><p><strong><a href="https://es.wikipedia.org/wiki/Markdown" rel="noopener" target="_blank">Markdown</a></strong> es la herramienta más fácil de esta sección: un "lenguaje ligero", una forma de escribir entendida a simple vista tanto por una computadora como por una persona. Uno de sus creadores fue <a href="https://es.wikipedia.org/wiki/Aaron_Swartz" rel="noopener" target="_blank">Aaron Swartz</a>, un joven prodigio de la computación que trágicamente se suicidó luego de que el gobierno de EE. UU. lo procesara por una suma millonaria, debido a su intento de compartir artículos académicos de forma libre y gratuita.</p><p>Markdown reivindica algo muy importante y a la vez muy ignorado en la academia: la importancia del texto sin formato, es decir, el texto desprovisto de negritas, itálicas, títulos o tipografías particulares, que existe sólo como <em>el texto en sí</em> (separando el contenido del diseño). Es importante porque puede guardarse fácilmente, es incorruptible, y puede leerse desde absolutamente cualquier programa, a diferencia de archivos de Word.</p><p>Para diferenciar el formato, Markdown introduce señalizaciones simples. Dos asteriscos a los lados de una palabra la muestran en negrita:</p><pre>**hola**  →  <strong>hola</strong></pre><p>Curiosamente, WhatsApp usa Markdown para dar estilo a los mensajes. Los títulos se indican con numerales o hashtags:</p><pre># Título grande  
+
+
+## Título un poco más chico
+
+### Título de tercer nivel
+
+#### Título de cuarto nivel</pre>
+
+      <p>Para escribir en Markdown y obtener como resultado un Word, PDF u otro formato, se usa un conversor como <a href="https://stackedit.io/" rel="noopener" target="_blank">StackEdit</a>. Para documentos académicos son útiles editores como <a href="https://www.zettlr.com/" rel="noopener" target="_blank">Zettlr</a>, que permiten asociar Markdown con los contenidos de Zotero. No es necesario descargar nada especial: alcanza con crear un documento con extensión <code>.md</code>.</p><div class="btn-row">
+<a class="btn" href="https://markdown.es/sintaxis-markdown/" rel="noopener" target="_blank">Referencia de sintaxis</a>
+<a class="btn filled" href="https://stackedit.io/" rel="noopener" target="_blank">Usar StackEdit</a>
+<a class="btn" href="https://www.zettlr.com/" rel="noopener" target="_blank">Descargar Zettlr</a>
+</div>
+      
+    </div>
+  </details>
+</section>
+<section class="card" id="latex">
+  <a class="module-anchor" href="#latex" title="Enlace directo a este módulo" aria-label="Enlace directo a LaTeX">#</a>
+  <details class="chapter" data-module>
+    <summary>
+      <span class="chapter-index">6</span>
+      <span class="chapter-heading">
+        <span class="chapter-eyebrow">Herramientas técnicas</span>
+        <h2 class="chapter-title">LaTeX</h2>
+      </span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="chapter-body">
+      <div class="video-frame">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/T81ncFZ_8uQ?rel=0&amp;modestbranding=1&amp;playsinline=1&amp;enablejsapi=1" title="Tutorial de LaTeX"></iframe>
+</div><p class="video-help">¿El reproductor muestra un error? <a href="https://www.youtube.com/watch?v=T81ncFZ_8uQ" rel="noopener" target="_blank">Abrir este tutorial directamente en YouTube</a></p><p><strong><a href="https://es.wikipedia.org/wiki/LaTeX" rel="noopener" target="_blank">LaTeX</a></strong> es el estándar académico indiscutible para escribir documentos científicos: muchas revistas de prestigio piden expresamente las contribuciones en este formato. Es, sin embargo, difícil tanto de instalar como de dominar. Para facilitar su uso se recomiendan editores en línea como <a href="https://es.overleaf.com/" rel="noopener" target="_blank">Overleaf</a>, o alternativas más modernas como <a href="https://typst.app/" rel="noopener" target="_blank">Typst</a>.</p><p>La gran ventaja de LaTeX es que, al igual que Markdown, <em>disminuye significativamente el margen de error en el formateo</em>: el autor se enfoca exclusivamente en escribir texto plano con comandos estructurados, sin los errores visuales tan comunes en procesadores como Word o Google Docs. Al delegar el diseño en un motor tipográfico automatizado, el resultado es un documento con consistencia perfecta en todo el manuscrito.</p><div class="btn-row">
+<a class="btn filled" href="https://es.overleaf.com/" rel="noopener" target="_blank">Abrir Overleaf</a>
+<a class="btn" href="https://typst.app/" rel="noopener" target="_blank">Probar Typst</a>
+</div>
+      
+    </div>
+  </details>
+</section>
+<section class="card" id="bibtex">
+  <a class="module-anchor" href="#bibtex" title="Enlace directo a este módulo" aria-label="Enlace directo a BibTeX">#</a>
+  <details class="chapter" data-module>
+    <summary>
+      <span class="chapter-index">7</span>
+      <span class="chapter-heading">
+        <span class="chapter-eyebrow">Herramientas técnicas</span>
+        <h2 class="chapter-title">BibTeX</h2>
+      </span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="chapter-body">
+      <div class="video-frame">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/efrbQ37aowM?rel=0&amp;modestbranding=1&amp;playsinline=1&amp;enablejsapi=1" title="Tutorial de BibTeX"></iframe>
+</div><p class="video-help">¿El reproductor muestra un error? <a href="https://www.youtube.com/watch?v=efrbQ37aowM" rel="noopener" target="_blank">Abrir este tutorial directamente en YouTube</a></p><p>BibTeX es la herramienta tradicional y el formato de base de datos que usa LaTeX para gestionar citas bibliográficas de forma automatizada, separada del cuerpo del texto. Aunque está asociado a LaTeX, su formato puede usarse también en otros programas.</p><p>Funciona mediante un archivo independiente con extensión <code>.bib</code> donde cada fuente se guarda como una entrada de texto plano con campos como autor, título, año y editorial:</p><pre>@article{einstein1905,  
+
+
+author  = {Albert Einstein},
+
+title   = {Zur Elektrodynamik bewegter K{"o}rper},
+
+journal = {Annalen der Physik},
+
+year    = {1905},
+
+volume  = {322},
+
+pages   = {891--921}
+
+}</pre><p>En el documento de LaTeX basta con invocar la clave única mediante el comando de citación (en el ejemplo, <code>@einstein1905</code>) para que el sistema procese la base de datos, aplique el formato pedido por la revista o el usuario, y construya la lista de referencias al final. Un solo comando pasa de APA a IEEE, Vancouver o cualquier otra norma.</p>
+      
+    </div>
+  </details>
+</section>
+<section class="card" id="betterbibtex">
+  <a class="module-anchor" href="#betterbibtex" title="Enlace directo a este módulo" aria-label="Enlace directo a Better BibTeX en Zotero y Zettlr">#</a>
+  <details class="chapter" data-module>
+    <summary>
+      <span class="chapter-index">8</span>
+      <span class="chapter-heading">
+        <span class="chapter-eyebrow">Herramientas técnicas</span>
+        <h2 class="chapter-title">Better BibTeX en Zotero y Zettlr</h2>
+      </span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="chapter-body">
+      <p>Better BibTeX es una extensión para Zotero que permite usar BibTeX con los documentos guardados en la biblioteca, y conectar ese formato con editores Markdown como Zettlr, simplificando enormemente la escritura de documentos académicos.</p><p>El comportamiento nativo de Zotero al exportar archivos <code>.bib</code> suele generar claves de citación inconsistentes o caracteres especiales que rompen la compatibilidad, además de requerir exportación manual constante. Better BibTeX lo soluciona generando claves estables y predecibles —por ejemplo, apellido del autor y año— y, sobre todo, mediante <em>exportación automatizada</em>: cualquier cambio agregado en Zotero se actualiza de inmediato en un archivo <code>.bib</code> centralizado en el disco, sin intervención del usuario.</p><figure>
+<img alt="Documento académico escrito en Zettlr usando Better BibTeX" src="https://i.snipboard.io/UDTXxP.jpg"/>
+<figcaption>Redacción en Zettlr con citas insertadas desde Better BibTeX (imagen ilustrativa).</figcaption>
+</figure><p>En Zettlr, editor de Markdown pensado para la redacción académica y el <a href="https://es.wikipedia.org/wiki/Zettelkasten" rel="noopener" target="_blank">método Zettelkasten</a>, basta con apuntar la configuración de citas hacia el archivo <code>.bib</code> que Better BibTeX mantiene actualizado. Al tipear el símbolo arroba seguido de las primeras letras del autor o título, Zettlr despliega un autocompletado que inserta la clave correspondiente, sin interrumpir el proceso de pensamiento.</p>
+      
+    </div>
+  </details>
+</section>
+<section class="card" id="git">
+  <a class="module-anchor" href="#git" title="Enlace directo a este módulo" aria-label="Enlace directo a Git">#</a>
+  <details class="chapter" data-module>
+    <summary>
+      <span class="chapter-index">9</span>
+      <span class="chapter-heading">
+        <span class="chapter-eyebrow">Herramientas técnicas</span>
+        <h2 class="chapter-title">Git</h2>
+      </span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="chapter-body">
+      <div class="video-frame">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/vlCXdvcgiE0?rel=0&amp;modestbranding=1&amp;playsinline=1&amp;enablejsapi=1" title="Tutorial de Git"></iframe>
+</div><p class="video-help">¿El reproductor muestra un error? <a href="https://www.youtube.com/watch?v=vlCXdvcgiE0" rel="noopener" target="_blank">Abrir este tutorial directamente en YouTube</a></p><p><strong><a href="https://es.wikipedia.org/wiki/Git" rel="noopener" target="_blank">Git</a></strong> es un controlador de versiones: uno de los más difíciles de entender de esta lista, pero con gran potencial para complementarse con las demás herramientas. Registra cada pequeño cambio realizado en un archivo de texto plano.</p><p>Para un investigador en ciencias sociales, Git funciona como una máquina del tiempo para proyectos. En lugar de guardar copias infinitas de un mismo archivo con nombres como <code>articulo_final.docx</code>, <code>articulo_final_revisado.docx</code> o <code>articulo_este_si_que_si-Final2-FINAL.docx</code>, se mantiene un único archivo limpio y centralizado.</p><p>Cada vez que se avanza en la redacción se guarda un "punto de control" (un <em>commit</em>) con una breve descripción de los cambios. Esto permite experimentar libremente con hipótesis o reestructurar capítulos enteros con la tranquilidad de poder volver a cualquier versión anterior si algo sale mal. El aporte de <a href="https://revistaecosistemas.net/index.php/ecosistemas/article/view/2332" rel="noopener" target="_blank">Astigarraga y Cruz-Alonso (2022)</a> resulta apropiado para ver sus capacidades y, en paralelo, sirve a modo de tutorial.</p><p>Git requiere —no es obligatorio, pero sí altamente recomendable— un lugar en internet donde almacenar los cambios y archivos. El más usado a nivel global es <a href="https://github.com/" rel="noopener" target="_blank">GitHub</a>, prácticamente el estándar de la industria.</p><div class="btn-row">
+<a class="btn filled" href="https://github.com/" rel="noopener" target="_blank">Ir a GitHub</a>
+<a class="btn" href="https://revistaecosistemas.net/index.php/ecosistemas/article/view/2332" rel="noopener" target="_blank">Leer a Astigarraga y Cruz-Alonso</a>
+</div>
+      
+    </div>
+  </details>
+</section>
+<section class="card" id="python">
+  <a class="module-anchor" href="#python" title="Enlace directo a este módulo" aria-label="Enlace directo a Python">#</a>
+  <details class="chapter" data-module>
+    <summary>
+      <span class="chapter-index">10</span>
+      <span class="chapter-heading">
+        <span class="chapter-eyebrow">Herramientas técnicas</span>
+        <h2 class="chapter-title">Python</h2>
+      </span>
+      <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </summary>
+    <div class="chapter-body">
+      <div class="video-frame">
+<iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube-nocookie.com/embed/_6N18g3ewnw?rel=0&amp;modestbranding=1&amp;playsinline=1&amp;enablejsapi=1" title="Tutorial de Python"></iframe>
+</div><p class="video-help">¿El reproductor muestra un error? <a href="https://www.youtube.com/watch?v=_6N18g3ewnw" rel="noopener" target="_blank">Abrir este tutorial directamente en YouTube</a></p><p>Por último, tal vez la herramienta más difícil de dominar pero la más poderosa que un cientista social puede tener a su disposición. <strong><a href="https://es.wikipedia.org/wiki/Python" rel="noopener" target="_blank">Python</a></strong> es un lenguaje de programación popular por su facilidad de uso y aprendizaje en comparación con otros lenguajes —lo que no quiere decir que sea fácil de dominar.</p><p>En ciencias sociales, Python dejó de ser una herramienta exclusiva de ingenieros para transformarse en el motor principal de la investigación y el análisis computacional, mayormente en el plano cuantitativo aunque también aplicable al cualitativo. Su gran ventaja es la versatilidad: con el mismo lenguaje se puede limpiar una base de datos, automatizar tareas repetitivas de oficina, analizar entrevistas de manera programática, y aplicar técnicas avanzadas de análisis estadístico. Es gratis y de código abierto.</p>
+      
+    </div>
+  </details>
+</section>
+
+  <!--<section class="card share-card">
+    <p class="share-title">Compartir esta guía</p>
+    <div class="icon-btn-row">
+      <button class="icon-btn" id="btnNativeShare" title="Compartir" aria-label="Compartir">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 10.5l6.8-3.9M8.6 13.5l6.8 3.9"/></svg>
+      </button>
+      <button class="icon-btn" id="btnCopy" title="Copiar enlace" aria-label="Copiar enlace">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="11" height="11" rx="1"/><path d="M5 15V5a1 1 0 0 1 1-1h10"/></svg>
+      </button>
+      <a class="icon-btn" id="btnMail" title="Enviar por correo" aria-label="Enviar por correo" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+      </a>
+      <a class="icon-btn" id="btnWhatsapp" title="Compartir por WhatsApp" aria-label="Compartir por WhatsApp" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 20l1.1-5.4A8.5 8.5 0 1 1 21 11.5z"/><path d="M8.5 10.5c0 3 2.5 5.5 5.5 5.5"/></svg>
+      </a>
+      <a class="icon-btn" id="btnX" title="Compartir en X" aria-label="Compartir en X" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l7.5 9.5L4.5 20H7l5.5-5.9L17 20h3l-7.8-9.9L19.5 4H17l-5 5.4L8 4H4z"/></svg>
+      </a>
+    </div>
+  </section>-->
+</main>
+
+<footer>Cátedra de Taller TFG · Herramientas para el análisis cualitativo · Edición web</footer>
+
+<button class="fab" id="topBtn" aria-label="Volver arriba">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+<div class="snackbar" id="snackbar">Enlace copiado</div>
+
+<script>
+const topBtn = document.getElementById('topBtn');
+const snackbar = document.getElementById('snackbar');
+const modules = [...document.querySelectorAll('details[data-module]')];
+const moduleSections = modules.map(d => d.closest('section.card')).filter(Boolean);
+
+function showSnackbar(msg){
+  snackbar.textContent = msg;
+  snackbar.classList.add('show');
+  clearTimeout(showSnackbar._t);
+  showSnackbar._t = setTimeout(() => snackbar.classList.remove('show'), 2400);
+}
+
+function scrollToModule(section){
+  if (!section) return;
+  const top = section.querySelector('summary');
+  if (!top) return;
+  requestAnimationFrame(() => {
+    const y = top.getBoundingClientRect().top + window.scrollY - 82;
+    window.scrollTo({top: Math.max(0, y), behavior:'smooth'});
+  });
+}
+
+function setBodyHeight(details, open){
+  const body = details.querySelector(':scope > .chapter-body');
+  if (!body) return;
+  if (open){
+    details.open = true;
+    body.style.maxHeight = body.scrollHeight + 'px';
+  } else {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => { body.style.maxHeight = '0px'; });
+  }
+}
+
+function finishClose(details){
+  const body = details.querySelector(':scope > .chapter-body');
+  details.open = false;
+  details.classList.remove('is-closing');
+  if (body){
+    body.style.maxHeight = '0px';
+    body.style.opacity = '';
+    body.style.transform = '';
+  }
+}
+
+function closeModule(details, shouldScroll = false){
+  if (!details.open) return;
+  const section = details.closest('section.card');
+  const body = details.querySelector(':scope > .chapter-body');
+  details.classList.remove('is-opening');
+  details.classList.add('is-closing');
+  if (body){
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => { body.style.maxHeight = '0px'; });
+    body.addEventListener('transitionend', function handler(e){
+      if (e.propertyName !== 'max-height') return;
+      body.removeEventListener('transitionend', handler);
+      finishClose(details);
+    });
+  } else {
+    finishClose(details);
+  }
+  if (shouldScroll) scrollToModule(section);
+}
+
+function closeOtherModules(current){
+  modules.forEach(module => {
+    if (module !== current && module.open) closeModule(module, false);
+  });
+}
+
+function openModule(id, shouldScroll = true){
+  const section = document.getElementById(id);
+  if (!section) return false;
+  const details = section.querySelector('details[data-module]');
+  if (!details) return false;
+
+  closeOtherModules(details);
+  const wasOpen = details.open;
+  const body = details.querySelector(':scope > .chapter-body');
+  details.classList.remove('is-closing');
+  details.classList.add('is-opening');
+  details.open = true;
+  if (body){
+    body.style.maxHeight = '0px';
+    requestAnimationFrame(() => { body.style.maxHeight = body.scrollHeight + 'px'; });
+  }
+  if (shouldScroll && !wasOpen) scrollToModule(section);
+  clearTimeout(details._openTimer);
+  details._openTimer = setTimeout(() => details.classList.remove('is-opening'), 380);
+  return true;
+}
+
+modules.forEach(details => {
+  const summary = details.querySelector(':scope > summary');
+  const section = details.closest('section.card');
+  const body = details.querySelector(':scope > .chapter-body');
+
+  // Use a custom toggle so opening/closing can animate smoothly.
+  summary.addEventListener('click', event => {
+    event.preventDefault();
+    if (details.open){
+      closeModule(details, true);
+      return;
+    }
+    const id = section?.id;
+    if (id){
+      history.pushState(null, '', `#${id}`);
+      openModule(id, true);
+    }
+  });
+
+  if (body){
+    body.addEventListener('transitionend', e => {
+      if (e.propertyName === 'max-height' && details.open && !details.classList.contains('is-closing')){
+        body.style.maxHeight = 'none';
+      }
+    });
+  }
+});
+
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', event => {
+    const id = link.getAttribute('href').slice(1);
+    const section = document.getElementById(id);
+    if (!id || !section) return;
+    const details = section.querySelector('details[data-module]');
+    if (!details) {
+      event.preventDefault();
+      section.scrollIntoView({behavior:'smooth', block:'start'});
+      history.pushState(null, '', `#${id}`);
+      return;
+    }
+    event.preventDefault();
+    history.pushState(null, '', `#${id}`);
+    openModule(id, true);
+  });
+});
+
+function syncFromHash(){
+  const id = decodeURIComponent(window.location.hash.slice(1));
+  if (id) openModule(id, false);
+}
+
+window.addEventListener('hashchange', syncFromHash);
+window.addEventListener('DOMContentLoaded', syncFromHash);
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 600) topBtn.classList.add('show');
+  else topBtn.classList.remove('show');
+}, {passive:true});
+
+topBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+const pageUrl = () => window.location.href;
+const pageTitle = document.title;
+
+document.getElementById('btnNativeShare').addEventListener('click', async () => {
+  if (navigator.share) {
+    try { await navigator.share({title:pageTitle, url:pageUrl()}); }
+    catch(e) {}
+  } else {
+    try { await navigator.clipboard.writeText(pageUrl()); showSnackbar('Enlace copiado'); }
+    catch(e) { showSnackbar('No se pudo compartir'); }
+  }
+});
+
+document.getElementById('btnCopy').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(pageUrl()); showSnackbar('Enlace copiado'); }
+  catch(e) { showSnackbar('No se pudo copiar'); }
+});
+
+document.getElementById('btnMail').addEventListener('click', e => {
+  e.preventDefault();
+  window.location.href = `mailto:?subject=${encodeURIComponent(pageTitle)}&body=${encodeURIComponent(pageUrl())}`;
+});
+document.getElementById('btnWhatsapp').href = `https://wa.me/?text=${encodeURIComponent(pageTitle + ' ' + pageUrl())}`;
+document.getElementById('btnX').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(pageTitle)}&url=${encodeURIComponent(pageUrl())}`;
+</script>
+</body>
+</html>
